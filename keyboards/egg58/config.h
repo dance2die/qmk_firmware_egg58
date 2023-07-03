@@ -3,13 +3,11 @@
 
 #pragma once
 
-#include "config_common.h"
-
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x3665
-#define DEVICE_VER      0x0002
-#define MANUFACTURER    tmick0
-#define PRODUCT         egg58
+// #define VENDOR_ID       0xFEED
+// #define PRODUCT_ID      0x3665
+// #define DEVICE_VER      0x0002
+// #define MANUFACTURER    tmick0
+// #define PRODUCT         egg58
 
 #define MATRIX_ROWS 10
 #define MATRIX_COLS 6
@@ -24,16 +22,17 @@
 
 #define USE_I2C
 
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
+// #define NO_ACTION_MACRO
+// #define NO_ACTION_FUNCTION
 
 #define MASTER_LEFT
 #define SPLIT_USB_DETECT
 #define SPLIT_MAX_CONNECTION_ERRORS 0
 
-#define RGB_DI_PIN D3
+// #define RGB_DI_PIN D3
 #define RGBLIGHT_SPLIT
 #define RGBLED_NUM 58
+#define RGB_MATRIX_LED_COUNT 58
 #define RGBLED_SPLIT { 29, 29 }
 #define RGBLIGHT_LIMIT_VAL 160
 #define RGBLIGHT_LAYERS
