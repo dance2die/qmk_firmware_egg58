@@ -47,11 +47,11 @@ static inline int8_t sign(const int8_t x) {
 }
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-
     if (layer >= _FN) {
+\
         // Translate move to scroll when Fn is active
         mouse_report.h = sign(mouse_report.x);
-        mouse_report.v = sign(mouse_report.y);
+        mouse_report.v = sign(mouse_report.y) * -1;
         mouse_report.x = 0;
         mouse_report.y = 0;
 
@@ -67,14 +67,37 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     else {
         // Send MacOS specific commands
 
+        bool is_up = sign(mouse_report.y) < 0;
+        bool is_down = sign(mouse_report.y) > 0;
+        bool is_left = sign(mouse_report.x) < 0;
+        bool is_right = sign(mouse_report.x) > 0;
 
-        // Translate move to scroll when Fn is active
-        mouse_report.h = sign(mouse_report.x);
-        mouse_report.v = sign(mouse_report.y);
+        // show windows
+        if (is_up) {
+            SEND_STRING(SS_DOWN(X_LCTL));
+            register_code(KC_UP);
+            SEND_STRING(SS_UP(X_LCTL));
+            unregister_code(KC_UP);
+        } else if (is_down) {
+            SEND_STRING(SS_DOWN(X_LCTL));
+            register_code(KC_DOWN);
+            SEND_STRING(SS_UP(X_LCTL));
+            unregister_code(KC_DOWN);
+        // like swiping left on mac
+        } else if (is_left) {
+            SEND_STRING(SS_DOWN(X_LCTL));
+            register_code(KC_LEFT);
+            SEND_STRING(SS_UP(X_LCTL));
+            unregister_code(KC_LEFT);
+        } else if (is_right) {
+            SEND_STRING(SS_DOWN(X_LCTL));
+            register_code(KC_RGHT);
+            SEND_STRING(SS_UP(X_LCTL));
+            unregister_code(KC_RGHT);
+        }
+
         mouse_report.x = 0;
         mouse_report.y = 0;
-
-
 
         // Only send once every SCROLL_WAIT_PERIOD ticks to slow scroll down
         if (mouse_report.h || mouse_report.v) {
@@ -84,6 +107,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
             }
             scroll_ticks = (scroll_ticks + 1) % SCROLL_WAIT_PERIOD;
         }
+
     }
 
     return mouse_report;
