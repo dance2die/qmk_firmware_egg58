@@ -15,9 +15,9 @@
         "rows": ["C6", "D7", "E6", "B4", "B5", "F7", "B1", "B3", "B2", "B6"]
     },
     "usb": {
-        "vid": "0xFEED",
+        "vid": "0x6986",
         "pid": "0x7A90",
-        "device_version": "1.0.0"
+        "device_version": "1.0.1"
     },
     "features": {
         "bootmagic": true,
